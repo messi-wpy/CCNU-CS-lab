@@ -16,6 +16,8 @@ typedef struct {
 
 } merchandise;
 
+
+typedef
 void initList();
 void purchase();
 void wrongMessage(char *message);
