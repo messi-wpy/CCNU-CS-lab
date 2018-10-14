@@ -3,4 +3,4 @@ project(untitled4 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(untitled4 main.c market.h)
+add_executable(untitled4  market.h Market.c)
