@@ -71,8 +71,29 @@ void createTree(BitTree tree){
 
 }
 
+//求树深度
+int BitTreeDepth(BitTree tree){
+    if (tree== nullptr)
+        return 0;
+    int left=BitTreeDepth(tree->lchild);
+    int right=BitTreeDepth(tree->rchild);
+    return (left>right?left:right)+1;
 
+}
+//先序求深度
+void PreDepth(BitTree tree,int h,int &depth){
+    if (tree){
+        if (h>depth)depth=h;
+        PreDepth(tree->lchild,h+1,depth);
+        PreDepth(tree->rchild,h+1,depth);
+
+    }
+
+
+}
 int main() {
+
+
     cout << "Hello, World!" << std::endl;
     return 0;
 }
