@@ -1,0 +1,27 @@
+  Myhash() {
+        hashmap = new hashItem[101];
+        n = 0;
+
+    }
+
+    void add(const string &key) {
+        int hashcode = hashFunction(key);
+        //处理冲突
+        if (hashmap[hashcode].key != key && hashmap[hashcode].val != 0) {
+            hashItem *ptr = &hashmap[hashcode];
+
+            hashItem *newItem = new hashItem;
+            newItem->key = key;
+            newItem->val = 1;
+            newItem->next = nullptr;
+            while (ptr->next != nullptr) {
+                ptr = ptr->next;
+            }
+            ptr->next = newItem;
+        } else {
+            hashmap[hashcode].val++;
+            hashmap[hashcode].key = key;
+            hashmap[hashcode].next = nullptr;
+
+        }
+    }

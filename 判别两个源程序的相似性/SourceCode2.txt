@@ -1,0 +1,17 @@
+void Hash::PrintTable() {
+    int number; //number of items in each bucket
+    for (int i = 0; i < tableSize; i++) {
+        cout << "i = " << i << ": " << endl;
+// print the first element in the bucket, and we can also see if there are some other items
+        number = NumberOfItemsInIndex(i);
+        cout << "--------------\n";
+        cout << "index = " << i << ": " << endl;
+        cout << HashTable[i] -> name << endl;
+        cout << HashTable[i] -> drink << endl;
+        cout << "# of items = " << number << endl;
+        cout << "--------------\n";
+
+
+    }
+}
+
