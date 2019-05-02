@@ -195,3 +195,41 @@ where company_name='First Bank Corporation' and salary > 100000 and employee_nam
 	select employee_name
     from managers
 );
+
+
+/* 第四章练习题*/
+/* 4.1 a*/
+select distinct ID ,name
+from instructor natural left outer join teaches;
+
+/* 4.1 b*/
+select distinct teaches.ID,name
+from teaches,instructor
+where teaches.ID=instructor.ID;
+
+/*4.1 c*/
+select course_id,sec_id,ID
+from (section natural left outer join teaches ) natural left outer join instructor
+where semester="Spring" and year=2010;
+/*4.1 d*/
+select dept_name, count( ID )
+from department natural left outer join instructor
+group by dept_name;
+
+/*4.2 a*/
+select * from student natural join takes
+union
+select ID , name, dept_name, tot_cred, NULL, NULL, NULL, NULL, NULL
+from student S1 where not exists
+(select ID from takes T1 where T1.id = S1.id);
+
+/*4.3 a r = (a,b), s = (x,y), t = (b,d).*/
+/*4.3 b  不可能
+
+
+
+
+
+
+
+
