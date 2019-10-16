@@ -2,14 +2,14 @@ package CompilationPrinciple;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.io.*;
+import java.util.*;
 
 public class LexicalAnalysis {
     private String input;
     private int index;
+    private boolean isFromFile=false;
+    private File sourceFile;
     private static HashSet<String>mainWords=new HashSet<>(Arrays.asList("begin","if","then","while","do","end"));
     private static HashMap<String,Integer>speciesCode=new HashMap<>();
     static
@@ -18,14 +18,24 @@ public class LexicalAnalysis {
         speciesCode.put("if",2);
         speciesCode.put("then",3);
 
+
+        speciesCode.put("int",4);
+        speciesCode.put("main",5);
+        speciesCode.put("return",6);
+        speciesCode.put("=",7);
+        speciesCode.put("{",9);
+        speciesCode.put("}",10);
+        speciesCode.put(";",11);
+        speciesCode.put(":=",20);
+        // TODO: 2019/10/16 补全
     }
     public LexicalAnalysis(String s){
         input=s;
         index=0;
     }
-    private void initTable(){
-
-
+    public LexicalAnalysis(File file){
+        sourceFile=file;
+        isFromFile=true;
     }
     public boolean isLetter(char a){
         return a>='a'&&a<='z'||a>='A'&&a<='Z';
@@ -34,27 +44,141 @@ public class LexicalAnalysis {
         return a>='0'&&a<='9';
     }
 
-    public String getWord(){
+    /**
+     *
+     * @return String[]:数组：第一个数代表该word的大种类：
+     * “1”-->单词，可能是关键词
+     * “2”-->数字
+     * “3”-->标识符
+     * 第二个表示获得的word
+     */
+    private String[] getWord(){
+        getbc();
+        String[]res=new String[2];
+        if (index>=input.length())
+            return null;
         char ch=input.charAt(index);
-        if ()
+        StringBuilder builder=new StringBuilder();
+        if (isLetter(ch)){
+            res[0]="1";
+            //识别正规式： letter(letter|digit)*
+            while (isLetter(ch)||isDigit(ch)){
+                builder.append(ch);
+                index++;
+                if (index>=input.length())
+                    break;
+                ch=input.charAt(index);
+            }
+        }else if (isDigit(ch)){
+            //识别数字
+            res[0]="2";
+            while (isDigit(ch)){
+                builder.append(ch);
+                index++;
+                if (index>=input.length())
+                    break;
+                ch=input.charAt(index++);
+            }
 
+
+        }else {
+            res[0]="3";
+            //识别分隔符等符号
+            while (!isDigit(ch)&&!isLetter(ch)&&ch!=' '){
+                builder.append(ch);
+                if (builder.length()>=2){
+                    if (!speciesCode.containsKey(builder.toString())){
+                        builder.deleteCharAt(builder.length()-1);
+                        index--;
+                        break;
+
+                    }
+
+                }
+                index++;
+                if (index>=input.length())
+                    break;
+                ch=input.charAt(index++);
+            }
+
+
+        }
+        res[1]=builder.toString();
+        return res;
     }
 
     //去掉空格等其他不必要的字符
     public void getbc(){
+        if (index>=input.length())
+            return;
         char temp=input.charAt(index);
         while (temp==' '||temp=='\n'){
             index++;
+            if (index>=input.length())
+                return;
             temp=input.charAt(index);
         }
     }
-    public void startAnalysis(){
 
+    private String getFromFile(){
+        FileInputStream in =null;
+        StringBuilder sb=null;
+        try {
+            in=new FileInputStream(sourceFile);
+            BufferedReader reader=new BufferedReader(new InputStreamReader(in));
+            sb=new StringBuilder();
+            String line=reader.readLine();
+            while (line!=null){
+                sb.append(line);
+                line=reader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
+    }
+    public void startAnalysis(){
+        if (isFromFile){
+            input=getFromFile();
+        }
+
+        while (index<input.length()){
+            String[]words=getWord();
+            if (words==null)
+                break;
+            if (words[0].equals("1")){
+                if (mainWords.contains(words[1])){
+                    print(words[1],speciesCode.get(words[1]));
+                }else
+                    print(words[1],10);
+
+            }else if (words[0].equals("2")){
+                print(words[1],11);
+            }else {
+                if (speciesCode.containsKey(words[1])){
+                    print(words[1],speciesCode.get(words[1]));
+                }else {
+                    throw new IllegalStateException("wrong word: "+words[1]);
+                }
+
+            }
+
+
+        }
 
 
     }
 
 
+    public void print(String word,int code){
+        System.out.println(String.format(Locale.ENGLISH,"(%s,%d)  ",word,code));
+    }
 
 
 
