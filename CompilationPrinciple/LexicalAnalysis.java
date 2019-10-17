@@ -17,16 +17,26 @@ public class LexicalAnalysis {
         speciesCode.put("begin",1);
         speciesCode.put("if",2);
         speciesCode.put("then",3);
+        speciesCode.put("while",4);
+        speciesCode.put("do",5);
+        speciesCode.put("end",6);
+        speciesCode.put("+",13);
+        speciesCode.put("-",14);
+        speciesCode.put("*",15);
+        speciesCode.put("/",16);
+        speciesCode.put(":",17);
+        speciesCode.put(":=",18);
+        speciesCode.put("<",20);
+        speciesCode.put("<>",21);
+        speciesCode.put("<=",22);
+        speciesCode.put(">",23);
+        speciesCode.put(">=",24);
+        speciesCode.put("=",25);
+        speciesCode.put(";",26);
+        speciesCode.put("(",27);
+        speciesCode.put(")",28);
+        speciesCode.put("#",0);
 
-
-        speciesCode.put("int",4);
-        speciesCode.put("main",5);
-        speciesCode.put("return",6);
-        speciesCode.put("=",7);
-        speciesCode.put("{",9);
-        speciesCode.put("}",10);
-        speciesCode.put(";",11);
-        speciesCode.put(":=",20);
         // TODO: 2019/10/16 补全
     }
     public LexicalAnalysis(String s){
@@ -177,7 +187,10 @@ public class LexicalAnalysis {
 
 
     public void print(String word,int code){
-        System.out.println(String.format(Locale.ENGLISH,"(%s,%d)  ",word,code));
+        if (code==10)
+            System.out.println(String.format(Locale.ENGLISH,"(%d,'%s')  ",code,word));
+        else
+            System.out.println(String.format(Locale.ENGLISH,"(%d,%s)  ",code,word));
     }
 
 
