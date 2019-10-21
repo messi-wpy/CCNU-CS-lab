@@ -1,4 +1,4 @@
-package OperatingSystem;
+package OperatingSystem.JobScheduling;
 
 public class Job {
 

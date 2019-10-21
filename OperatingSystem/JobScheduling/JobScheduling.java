@@ -1,4 +1,4 @@
-package OperatingSystem;
+package OperatingSystem.JobScheduling;
 
 import java.util.*;
 
@@ -123,10 +123,6 @@ public class JobScheduling {
             jobOut(out,timeFormat(startTime));
         }
 
-        for (int i = 0; i <waitList.size(); i++) {
-            Job out =waitList.get(i);
-            jobOut(out,timeFormat(startTime));
-        }
 
 
 
