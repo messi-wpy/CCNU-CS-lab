@@ -1,4 +1,4 @@
-package OperatingSystem.JobScheduling;
+package OperatingSystem.JobSchedule;
 
 import java.util.*;
 
