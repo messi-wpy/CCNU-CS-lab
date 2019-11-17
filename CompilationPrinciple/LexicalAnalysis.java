@@ -37,7 +37,6 @@ public class LexicalAnalysis {
         speciesCode.put(")",28);
         speciesCode.put("#",0);
 
-        // TODO: 2019/10/16 补全
     }
     public LexicalAnalysis(String s){
         input=s;
@@ -62,7 +61,7 @@ public class LexicalAnalysis {
      * “3”-->标识符
      * 第二个表示获得的word
      */
-    private String[] getWord(){
+    public String[] getWord(){
         getbc();
         String[]res=new String[2];
         if (index>=input.length())
@@ -117,6 +116,13 @@ public class LexicalAnalysis {
         return res;
     }
 
+    public int getSyn(String word){
+        Integer res=speciesCode.get(word);
+        if (res==null)
+            throw new IllegalStateException("wrong words:  "+word);
+        return res;
+
+    }
     //去掉空格等其他不必要的字符
     public void getbc(){
         if (index>=input.length())
