@@ -2,6 +2,22 @@ package OperatingSystem.progressSchedule;
 
 public class Progress {
 
+    public int getEnterTime() {
+        return enterTime;
+    }
+
+    public void setEnterTime(int enterTime) {
+        this.enterTime = enterTime;
+    }
+
+    public int getReadyTime() {
+        return readyTime;
+    }
+
+    public void setReadyTime(int readyTime) {
+        this.readyTime = readyTime;
+    }
+
     public enum Status{
         READY,WAIT,RUN
     }
@@ -10,17 +26,26 @@ public class Progress {
     private int cost;
     private Status status;
     private int PriorityNum;
-    public int time;
+    //固定一个进程消费的时间
+    public int originCostTime;
+    public int originEnterTime;
+    private int enterTime;
+    private int readyTime;
 
-    public Progress(int pid, int cost, int status, int priorityNum) {
+    public Progress(int pid, int cost, int status, int priorityNum,int enterTime,int readyTime) {
         this.pid = pid;
         this.cost = cost;
-        time=cost;
+        originCostTime=cost;
+        originEnterTime=enterTime;
         PriorityNum = priorityNum;
+        this.enterTime=enterTime;
+        this.readyTime=readyTime;
         if (status==0)
             this.status=Status.READY;
-        else if (status==1)
-            this.status=Status.WAIT;
+        else if (status==1) {
+            this.status = Status.WAIT;
+            originEnterTime=readyTime;
+        }
         else
             this.status=Status.RUN;
 
