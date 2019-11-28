@@ -86,7 +86,7 @@ public class LexicalAnalysis {
                 index++;
                 if (index>=input.length())
                     break;
-                ch=input.charAt(index++);
+                ch=input.charAt(index);
             }
 
 
@@ -107,7 +107,7 @@ public class LexicalAnalysis {
                 index++;
                 if (index>=input.length())
                     break;
-                ch=input.charAt(index++);
+                ch=input.charAt(index);
             }
 
 
@@ -116,13 +116,29 @@ public class LexicalAnalysis {
         return res;
     }
 
-    public int getSyn(String word){
-        Integer res=speciesCode.get(word);
-        if (res==null)
-            throw new IllegalStateException("wrong words:  "+word);
-        return res;
+    public int getSyn(String[] words){
+        if (words==null)
+            return -1;
+        if (words[0].equals("1")){
+            if (mainWords.contains(words[1])){
+                return speciesCode.get(words[1]);
+            }else
+                return 10;
+
+        }else if (words[0].equals("2")){
+            return 11;
+        }else {
+            if (speciesCode.containsKey(words[1])){
+                return speciesCode.get(words[1]);
+            }else {
+                throw new IllegalStateException("wrong word: "+words[1]);
+            }
+
+        }
 
     }
+
+
     //去掉空格等其他不必要的字符
     public void getbc(){
         if (index>=input.length())
@@ -184,7 +200,6 @@ public class LexicalAnalysis {
                 }
 
             }
-
 
         }
 

@@ -9,6 +9,11 @@ public class SyntaxAnalysis {
     private int kk = 0;
     private String[] word = null;
 
+    public static void main(String[] args) {
+        SyntaxAnalysis analysis=new SyntaxAnalysis(new LexicalAnalysis("x:=a+b*c end#"));
+        //SyntaxAnalysis analysis=new SyntaxAnalysis(new LexicalAnalysis("begin a:=9; x:=2*3;b:=a+x end#"));
+        analysis.Lrparser();
+    }
     public SyntaxAnalysis(LexicalAnalysis lexical) {
         this.lexical = lexical;
 
@@ -16,11 +21,10 @@ public class SyntaxAnalysis {
 
     public void scanner() {
         word = lexical.getWord();
-        syn = lexical.getSyn(word[1]);
+        syn =lexical.getSyn(word);
     }
 
     public void Lrparser() {
-        String[] word = lexical.getWord();
         scanner();
         if (syn != 1) {
             System.out.println("'begin'错误；");
