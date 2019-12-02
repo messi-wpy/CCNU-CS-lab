@@ -2,22 +2,6 @@ package OperatingSystem.progressSchedule;
 
 public class Progress {
 
-    public int getEnterTime() {
-        return enterTime;
-    }
-
-    public void setEnterTime(int enterTime) {
-        this.enterTime = enterTime;
-    }
-
-    public int getReadyTime() {
-        return readyTime;
-    }
-
-    public void setReadyTime(int readyTime) {
-        this.readyTime = readyTime;
-    }
-
     public enum Status{
         READY,WAIT,RUN
     }
@@ -31,6 +15,7 @@ public class Progress {
     public int originEnterTime;
     private int enterTime;
     private int readyTime;
+
 
     public Progress(int pid, int cost, int status, int priorityNum,int enterTime,int readyTime) {
         this.pid = pid;
@@ -49,6 +34,22 @@ public class Progress {
         else
             this.status=Status.RUN;
 
+    }
+
+    public int getEnterTime() {
+        return enterTime;
+    }
+
+    public void setEnterTime(int enterTime) {
+        this.enterTime = enterTime;
+    }
+
+    public int getReadyTime() {
+        return readyTime;
+    }
+
+    public void setReadyTime(int readyTime) {
+        this.readyTime = readyTime;
     }
 
     public int getPid() {
