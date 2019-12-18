@@ -17,6 +17,7 @@ public class Test {
         freeTable.add(new Partition(156,12));
         freeTable.add(new Partition(200,28));
 
+
         StorageManagement management=new StorageManagement(freeTable);
         management.FirstAdaptation(list);
 
